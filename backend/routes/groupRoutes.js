@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const groupModel = require('../models/groupModel');
-const database = require('../config/database');
-
 
 router.get('/', async (req, res) => {
     try {
-        // const data = groupModel.find({});
-        // res.send(data);
+        const data = await groupModel.find();
+        res.send(data);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'An error occurred while fetching the groups' });

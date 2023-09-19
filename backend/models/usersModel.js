@@ -10,8 +10,9 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: true,
     },
-    contactNo: {
+    password: {
         type: String,
+        required: true,
     },
     // You can add more user-related fields here
 });
