@@ -7,21 +7,21 @@ router.post('/signup', async (req, res) => {
     try {
         const { name, email, password } = req.body;
         if (!(name && email && password)) {
-            return res.status(400).json({ error: 'All fields are required' });
+            res.status(400).json({ error: 'All fields are required' });
         }
 
         const oldUser = await usersModel.findOne({ email });
         if (oldUser) { 
-           return res.status(400).json({ error: 'User already exists, Please Login !!' });
+           res.status(400).json({ error: 'User already exists, Please Login !!' });
         }
 
         const newUser = new usersModel({ name, email, password });
 
         const saveUser = await newUser.save();
-        return res.status(201).json({message: 'User saved successfully', user: saveUser});
+        res.status(201).json({message: 'User saved successfully', user: saveUser});
     } catch (error) {
         console.log(error);
-        return res.status(500).json({error: 'Error occured while creating user'});
+        res.status(500).json({error: 'Error occured while creating user'});
     }
 });
 
@@ -36,13 +36,13 @@ router.post('/login', async (req, res) => {
         if (user) {
             const token = jwt.sign({ email: user.email, name: user.name, id: user.id }, "tokendecoder", { expiresIn: "24hrs" });
             res.cookie("token", token);
-            return res.status(200).json({ message: 'Login Successful', token });
+            res.status(200).json({ message: 'Login Successful', token });
         } else {
-            return res.status(400).json({ error: 'Invalid email and password.' });
+            res.status(400).json({ error: 'Invalid email and password.' });
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        res.status(500).json({
             error: 'Error occured while logging user'
         });
     }
