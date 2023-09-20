@@ -1,7 +1,38 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [error, setError] = useState();
+  const navigate = useNavigate();
+
+  const handleSignup = async () => {
+    try {
+      let res = await fetch('http://localhost:8000/users/signup', {
+        method: "post",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password
+        })
+      });
+      if (res.status === 201) {
+        navigate('/login');
+      }
+      res = await res.json();
+      if (res.error) {
+        setError(res.error);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className='p-10 m-auto w-1/2 flex justify-evenly my-20'>
       <div>
@@ -9,6 +40,7 @@ const Signup = () => {
       </div>
       <div className='flex flex-col space-y-4'>
         <div className='text-slate-400 font-bold text-lg'>INTRODUCE YOURSELF</div>
+        {error && <div className='text-red-500'>{error}</div>}
         <div className='flex flex-col space-y-2'>
           <label className='text-2xl'>Hi there! My name is</label>
           <input value={name} onChange={(e) => setName(e.target.value)} className='border-2 h-10' type="text"></input>
@@ -17,16 +49,15 @@ const Signup = () => {
           name && <div>
             <div className='flex flex-col space-y-2'>
               <label className='text-xl'>Here's my <strong>email address:</strong></label>
-              <input  className='border-2 h-10' type="text"></input>
+              <input value={email} onChange={(e) => setEmail(e.target.value)} className='border-2 h-10' type="text"></input>
             </div>
             <div className='flex flex-col space-y-2'>
               <label className='text-xl'>And here's my <strong>password:</strong></label>
-              <input className='border-2 h-10' type="text"></input>
+              <input value={password} onChange={(e) => setPassword(e.target.value)} className='border-2 h-10' type="text"></input>
             </div>
           </div>
         }
-
-        <button className='bg-orange-400 p-2 rounded text-white font-bold shadow-lg'>Sign me up!</button>
+        <button onClick={handleSignup} className='bg-orange-400 p-2 rounded text-white font-bold shadow-lg'>Sign me up!</button>
       </div>
     </div>
   )

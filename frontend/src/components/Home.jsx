@@ -34,7 +34,6 @@ const Home = () => {
                     <img alt="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsJAD3vH6fzp-rhqwL3p6muJId_JBo1dJPkA&usqp=CAU"></img>
                 </div>
             </div>
-
         </div>
     )
 } 

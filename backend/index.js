@@ -21,4 +21,4 @@ app.use('/expense', expenseRoutes);
 
 app.get('/a', (req, res) => res.send('<h1>Server is up and running</h1>'));
 
-app.listen(8080, () => console.log('listening on http://localhost on port 8000'));
+app.listen(8000, () => console.log('listening on http://localhost on port 8000'));
