@@ -27,7 +27,7 @@ const Login = () => {
       }
       Cookies.set('token', res.token);
       if (res.token) {
-        navigate('/dashboard');
+        navigate('/users/dashboard');
       }
     } catch (err) {
       console.log(err);

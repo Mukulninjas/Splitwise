@@ -8,6 +8,7 @@ import AllExpenses from './components/AllExpenses';
 import RecentActivity from './components/RecentActivity';
 import Main from './components/Main';
 import ProtectedRoute from './components/ProtectedRoute';
+import Group from './components/Group';
 
 function App() {
   return (
@@ -16,11 +17,14 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<ProtectedRoute Component={Main} />}>
-          <Route index element={<Dashboard />} />
+        <Route path="/users" element={<ProtectedRoute Component={Main} />}>
+          <Route index path='dashboard' element={<Dashboard />} />
           <Route path="activity" element={<RecentActivity />} />
           <Route path="all" element={<AllExpenses />} />
         </Route>
+        <Route path="/group/new" element={<Group />} />
+        {/* <Route path="/friends/new" element={<Group />} /> */}
+
       </Routes>
     </BrowserRouter>
   );
